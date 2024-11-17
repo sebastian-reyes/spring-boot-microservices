@@ -14,5 +14,6 @@ public class ProductDto {
     private String name;
     private Double price;
     private LocalDate createAt;
+    private int port;
 
 }

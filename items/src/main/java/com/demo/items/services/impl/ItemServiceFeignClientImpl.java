@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService {
+public class ItemServiceFeignClientImpl implements ItemService {
 
     private final ProductFeignClient productFeignClient;
 
