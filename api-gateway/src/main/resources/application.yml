@@ -8,6 +8,11 @@ spring:
             - Path=/gateway/products/**
           filters:
             - StripPrefix=2
+            - name: SampleCookie
+              args:
+                name: cookieName
+                value: sebastian
+                message: Hola, este es mi mensaje personalizado para productos
         - id: items
           uri: lb://items
           predicates:
