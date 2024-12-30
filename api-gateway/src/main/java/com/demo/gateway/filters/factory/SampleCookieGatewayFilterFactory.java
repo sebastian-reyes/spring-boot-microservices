@@ -20,12 +20,12 @@ public class SampleCookieGatewayFilterFactory extends AbstractGatewayFilterFacto
     @Override
     public GatewayFilter apply(Config cookie) {
         return (exchange, chain) -> {
-            logger.info("ejecuntando SampleCookieGatewayFilterFactory: {}", cookie.getMessage());
-            return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                exchange.getResponse()
-                        .getCookies()
-                        .add("color", ResponseCookie.from(cookie.getName(), cookie.getValue()).build());
-            }));
+            logger.info("ejecutando SampleCookieGatewayFilterFactory: {}", cookie.getMessage());
+            return chain.filter(exchange).then(Mono.fromRunnable(() ->
+                    exchange.getResponse()
+                            .getCookies()
+                            .add("color", ResponseCookie.from(cookie.getName(), cookie.getValue()).build())
+            ));
         };
     }
 
@@ -33,7 +33,6 @@ public class SampleCookieGatewayFilterFactory extends AbstractGatewayFilterFacto
         private String name;
         private String value;
         private String message;
-
 
         public String getName() {
             return name;

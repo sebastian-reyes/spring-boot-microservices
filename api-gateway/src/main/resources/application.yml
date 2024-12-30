@@ -6,6 +6,10 @@ spring:
           uri: lb://products
           predicates:
             - Path=/gateway/products/**
+            # - Header=token-example, 12345
+            # - Method=GET
+            # - Query=name, products-example
+            # - Cookie=cookie, abdef
           filters:
             - StripPrefix=2
             - name: SampleCookie
@@ -19,3 +23,6 @@ spring:
             - Path=/gateway/items/**
           filters:
             - StripPrefix=2
+            - AddRequestHeader=request-obligatory-example, abc
+            - AddResponseHeader=response-obligatory-example, 321
+            - AddRequestParameter=name, sebastian
