@@ -1,6 +1,6 @@
 package com.demo.items.services.impl;
 
-import com.demo.items.clients.ProductFeignClient;
+import com.demo.items.configuration.clients.ProductFeignClient;
 import com.demo.items.models.Item;
 import com.demo.items.models.ProductDto;
 import com.demo.items.services.ItemService;

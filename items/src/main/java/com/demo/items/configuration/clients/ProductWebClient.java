@@ -1,4 +1,4 @@
-package com.demo.items.clients;
+package com.demo.items.configuration.clients;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

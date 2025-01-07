@@ -1,4 +1,4 @@
-package com.demo.items.clients;
+package com.demo.items.configuration.clients;
 
 import com.demo.items.models.ProductDto;
 import org.springframework.cloud.openfeign.FeignClient;
