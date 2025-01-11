@@ -13,6 +13,7 @@ import java.time.Duration;
 @Configuration
 public class AppConfig {
 
+    /*
     @Bean
     Customizer<Resilience4JCircuitBreakerFactory> customizerCircuitBreaker(){
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
@@ -27,4 +28,5 @@ public class AppConfig {
                 .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(4L)).build())
                 .build());
     }
+    */
 }
