@@ -30,7 +30,7 @@ public class ProductController {
             throw new IllegalStateException("Product not found");
         }
         if (id == 7L) {
-            TimeUnit.SECONDS.sleep(5L);
+            TimeUnit.SECONDS.sleep(2L);
         }
         return productService.findById(id)
                 .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
