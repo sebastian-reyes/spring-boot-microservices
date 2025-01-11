@@ -6,6 +6,7 @@
 - Microservicio Productos
 - API Gateway
 - Eurerka Server
+- Config Server
 
 ## Temario
 
@@ -14,8 +15,8 @@
 - [x] Registro de microservicios en la API Gateway
 - [x] Filtros dentro de la API Gateway (GatewayFilterFactory)
 - [x] Predicates en API Gateway
-- [ ] Resiliencia en microservicios
-- [ ] Spring Cloud Config Server
+- [x] Resiliencia en microservicios
+- [x] Spring Cloud Config Server
 - [ ] WebClient - Programación reactiva en microservicios
 - [ ] Spring Authorization Server (OAuth - JWT)
 - [ ] Trazabilidad - Micrometer Tracing y Zipkin
@@ -29,3 +30,4 @@
 - Netflix Eureka Server
 - Lombok
 - Resilience4J
+- Spring Cloud Config Server
