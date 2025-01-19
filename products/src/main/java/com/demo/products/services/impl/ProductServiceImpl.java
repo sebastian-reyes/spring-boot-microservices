@@ -38,4 +38,19 @@ public class ProductServiceImpl implements ProductService {
             return product;
         });
     }
+
+    @Override
+    public Product save(Product product) {
+        return productRepository.save(product);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+        } else {
+            throw new IllegalStateException("Product with id " + id + " not found");
+        }
+    }
 }
