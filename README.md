@@ -4,6 +4,7 @@
 
 - Microservicio Items
 - Microservicio Productos
+- Microservicio Usuarios
 - API Gateway
 - Eurerka Server
 - Config Server
@@ -27,8 +28,9 @@
 
 - Java 17
 - Spring Boot
+- Webflux
 - Netflix Eureka Server
 - Lombok
 - Resilience4J
 - Spring Cloud Config Server
-- Webflux Client, Feign Client
+- Web Client, Feign Client
