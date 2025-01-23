@@ -17,7 +17,7 @@
 - [x] Predicates en API Gateway
 - [x] Resiliencia en microservicios
 - [x] Spring Cloud Config Server
-- [ ] WebClient - Programación reactiva en microservicios
+- [x] WebClient - Programación reactiva en microservicios
 - [ ] Spring Authorization Server (OAuth - JWT)
 - [ ] Trazabilidad - Micrometer Tracing y Zipkin
 - [ ] Docker - Docker Hub
@@ -31,3 +31,4 @@
 - Lombok
 - Resilience4J
 - Spring Cloud Config Server
+- Webflux Client, Feign Client
