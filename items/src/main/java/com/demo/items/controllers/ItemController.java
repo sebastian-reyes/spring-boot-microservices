@@ -62,6 +62,22 @@ public class ItemController {
         }
     }
 
+    @PostMapping
+    public ResponseEntity<ProductDto> save(@RequestBody ProductDto productDto) {
+        return new ResponseEntity<>(itemService.save(productDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDto> update(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        return new ResponseEntity<>(itemService.update(id, productDto), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        itemService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     public ResponseEntity<Item> fallback(Throwable e) {
         ProductDto productDto = new ProductDto();
         productDto.setCreateAt(LocalDate.now());

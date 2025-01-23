@@ -36,4 +36,19 @@ public class ItemServiceFeignClientImpl implements ItemService {
             return Optional.empty();
         }
     }
+
+    @Override
+    public ProductDto save(ProductDto productDto) {
+        return null;
+    }
+
+    @Override
+    public ProductDto update(Long id, ProductDto productDto) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
 }
