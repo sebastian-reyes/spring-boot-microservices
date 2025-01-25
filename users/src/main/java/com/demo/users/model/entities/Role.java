@@ -10,14 +10,11 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("users")
-public class User {
+@Table("roles")
+public class Role {
 
     @Id
-    @Column("id_user")
-    private Long idUser;
-    private String username;
-    private String password;
-    private String email;
-    private Boolean enabled;
+    @Column("id_role")
+    private Long idRole;
+    private String name;
 }

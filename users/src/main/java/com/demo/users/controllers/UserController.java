@@ -1,5 +1,6 @@
 package com.demo.users.controllers;
 
+import com.demo.users.model.dto.UserDto;
 import com.demo.users.model.entities.User;
 import com.demo.users.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public Flux<User> getAllUsers() {
+    public Flux<UserDto> getAllUsers() {
         return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Mono<User> getUserById(@PathVariable Long id) {
+    public Mono<UserDto> getUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
@@ -38,21 +39,11 @@ public class UserController {
 
     @PutMapping("/{id}")
     public Mono<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        return userService.findById(id)
-                .flatMap(existingUser -> {
-                    user.setId(id);
-                    return userService.save(user);
-                });
+        return userService.update(id, user);
     }
 
     @DeleteMapping("/{id}")
     public Mono<Void> deleteUser(@PathVariable Long id) {
         return userService.delete(id);
     }
-
-    @GetMapping("/username/{username}")
-    public Mono<User> getUserByUsername(@PathVariable String username) {
-        return userService.findByUsername(username);
-    }
-
 }
