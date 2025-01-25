@@ -22,6 +22,12 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: users
+          uri: lb://users
+          predicates:
+            - Path=/gateway/users/**
+          filters:
+            - StripPrefix=2
         - id: products
           uri: lb://products
           predicates:
