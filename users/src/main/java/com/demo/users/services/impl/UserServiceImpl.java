@@ -1,8 +1,10 @@
 package com.demo.users.services.impl;
 
 import com.demo.users.model.dto.UserDto;
+import com.demo.users.model.dto.UserRequest;
 import com.demo.users.model.entities.Role;
 import com.demo.users.model.entities.User;
+import com.demo.users.model.entities.UserRole;
 import com.demo.users.repository.RoleRepository;
 import com.demo.users.repository.UserRepository;
 import com.demo.users.repository.UserRoleRepository;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -29,11 +33,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Flux<UserDto> findAll() {
         return userRepository.findAll()
-                .flatMap(user ->
-                        userRoleRepository.findAllByIdUser(user.getIdUser())
-                                .flatMap(userRole -> roleRepository.findById(userRole.getIdRole()))
-                                .collectList()
-                                .map(roles -> userToUserDto(user, roles))
+                .concatMap (user ->
+                    userRoleRepository.findAllByIdUser(user.getIdUser())
+                            .flatMap(userRole -> roleRepository.findById(userRole.getIdRole()))
+                            .collectList()
+                            .switchIfEmpty(Mono.just(Collections.emptyList()))
+                            .map(roles -> userToUserDto(user, roles))
                 );
 
     }
@@ -50,9 +55,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<User> save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public Mono<UserDto> save(UserRequest userDto) {
+        User newUser = User.builder()
+                .username(userDto.getUsername())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .email(userDto.getEmail())
+                .enabled(userDto.getEnabled())
+                .build();
+        return userRepository.save(newUser)
+                .flatMap(savedUser -> {
+                    String roleName = (userDto.isAdmin() != null && userDto.isAdmin())
+                            ? "ROLE_ADMIN"
+                            : "ROLE_USER";
+                    return roleRepository.findByName(roleName)
+                            .switchIfEmpty(Mono.error(new RuntimeException("Role not found: " + roleName)))
+                            .flatMap(role ->
+                                    userRoleRepository.save(new UserRole(null, savedUser.getIdUser(), role.getIdRole()))
+                            )
+                            .thenReturn(savedUser);
+                })
+                .flatMap(savedUser ->
+                        userRoleRepository.findAllByIdUser(savedUser.getIdUser())
+                                .flatMap(userRole -> roleRepository.findById(userRole.getIdRole()))
+                                .collectList()
+                                .map(roles -> userToUserDto(savedUser, roles)));
     }
 
     @Override
@@ -91,7 +117,7 @@ public class UserServiceImpl implements UserService {
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .enabled(user.getEnabled())
-                .roles(roles)
+                .roles(roles != null ? roles : Collections.emptyList())
                 .build();
     }
 }

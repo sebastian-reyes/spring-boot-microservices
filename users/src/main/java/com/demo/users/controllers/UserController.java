@@ -1,6 +1,7 @@
 package com.demo.users.controllers;
 
 import com.demo.users.model.dto.UserDto;
+import com.demo.users.model.dto.UserRequest;
 import com.demo.users.model.entities.User;
 import com.demo.users.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping
-    public Mono<User> createUser(@RequestBody User user) {
+    public Mono<UserDto> createUser(@RequestBody UserRequest user) {
         return userService.save(user);
     }
 
