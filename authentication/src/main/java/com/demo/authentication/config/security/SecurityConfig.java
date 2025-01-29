@@ -1,4 +1,4 @@
-package com.demo.authentication.security;
+package com.demo.authentication.config.security;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -14,6 +14,7 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -26,6 +27,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -46,7 +48,10 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final PasswordEncoder passwordEncoder;
 
     @Bean
     @Order(1)
@@ -93,6 +98,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /*
     @Bean
     UserDetailsService userDetailsService() {
         UserDetails userDetails = User.builder()
@@ -107,12 +113,13 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(userDetails, admin);
     }
+    */
 
     @Bean
     RegisteredClientRepository registeredClientRepository() {
         RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("gateway")
-                .clientSecret("{noop}12345")
+                .clientSecret(passwordEncoder.encode("12345"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)

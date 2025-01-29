@@ -1,6 +1,7 @@
 package com.demo.users.services.impl;
 
 import com.demo.users.model.dto.UserDto;
+import com.demo.users.model.dto.UserLoginDto;
 import com.demo.users.model.dto.UserRequest;
 import com.demo.users.model.entities.Role;
 import com.demo.users.model.entities.User;
@@ -102,12 +103,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<UserDto> findByUsername(String username) {
+    public Mono<UserLoginDto> findByUsername(String username) {
         return userRepository.findByUsername(username).flatMap(user ->
                 userRoleRepository.findAllByIdUser(user.getIdUser())
                         .flatMap(userRole -> roleRepository.findById(userRole.getIdRole()))
                         .collectList()
-                        .map(roles -> userToUserDto(user, roles))
+                        .map(roles -> getUserDetailsToLogin(user, roles))
         );
     }
 
@@ -115,6 +116,17 @@ public class UserServiceImpl implements UserService {
         return UserDto.builder()
                 .idUser(user.getIdUser())
                 .username(user.getUsername())
+                .email(user.getEmail())
+                .enabled(user.getEnabled())
+                .roles(roles != null ? roles : Collections.emptyList())
+                .build();
+    }
+
+    private UserLoginDto getUserDetailsToLogin(User user, List<Role> roles) {
+        return UserLoginDto.builder()
+                .idUser(user.getIdUser())
+                .username(user.getUsername())
+                .password(user.getPassword())
                 .email(user.getEmail())
                 .enabled(user.getEnabled())
                 .roles(roles != null ? roles : Collections.emptyList())

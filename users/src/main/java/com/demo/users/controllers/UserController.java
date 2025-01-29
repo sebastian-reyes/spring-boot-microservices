@@ -1,6 +1,7 @@
 package com.demo.users.controllers;
 
 import com.demo.users.model.dto.UserDto;
+import com.demo.users.model.dto.UserLoginDto;
 import com.demo.users.model.dto.UserRequest;
 import com.demo.users.model.entities.User;
 import com.demo.users.services.UserService;
@@ -31,6 +32,11 @@ public class UserController {
     @GetMapping("/{id}")
     public Mono<UserDto> getUserById(@PathVariable Long id) {
         return userService.findById(id);
+    }
+
+    @GetMapping("/username/{username}")
+    public Mono<UserLoginDto> getUserByUsername(@PathVariable String username) {
+        return userService.findByUsername(username);
     }
 
     @PostMapping
