@@ -5,6 +5,7 @@
 - Microservicio Items
 - Microservicio Productos
 - Microservicio Usuarios
+- Authentication Service
 - API Gateway
 - Eurerka Server
 - Config Server
@@ -19,7 +20,7 @@
 - [x] Resiliencia en microservicios
 - [x] Spring Cloud Config Server
 - [x] WebClient - Programación reactiva en microservicios
-- [ ] Spring Authorization Server (OAuth - JWT)
+- [x] Spring Authorization Server (OAuth - JWT)
 - [ ] Trazabilidad - Micrometer Tracing y Zipkin
 - [ ] Docker - Docker Hub
 - [ ] Despliegue en AWS
@@ -34,3 +35,4 @@
 - Resilience4J
 - Spring Cloud Config Server
 - Web Client, Feign Client
+- OAuth, JWT
